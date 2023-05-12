@@ -1,40 +1,37 @@
-use std::fs::File;
-use std::io::prelude::*;
-
 use async_openai::types::{
     ChatCompletionRequestMessage, ChatCompletionRequestMessageArgs,
-    CreateChatCompletionRequestArgs, Role,
+    CreateChatCompletionRequestArgs, CreateChatCompletionResponse, Role,
 };
 use async_openai::Client as OpenAiClient;
 
-fn get_credentials() -> toml::Value {
-    // Read credentials.toml file to get keys
-    let mut file = File::open("credentials.toml").expect("Failed to open credentials file");
-    let mut contents = String::new();
-    file.read_to_string(&mut contents)
-        .expect("Failed to read credentials file");
-    let cred: toml::Value = contents.parse().expect("Failed to parse credentials TOML");
+use std::fs;
 
-    cred
+pub async fn gpt_query(
+    model: &str,
+    max_tokens: u16,
+    query: &str,
+) -> Result<String, Box<dyn std::error::Error>> {
+    let openai_api_key = read_api_key_from_credentials_file()?;
+    let openai = OpenAiClient::new().with_api_key(openai_api_key);
+    let messages = build_messages_from_query(query);
+    let response = query_gpt_with_retries(&openai, model, &messages, max_tokens, 3).await?;
+    let result = response.choices.first().unwrap().message.content.clone();
+    Ok(result)
 }
 
-/// Get openai client
-fn get_openai() -> OpenAiClient {
-    let cred = get_credentials();
-
-    // Configure the client with your openai api key
+fn read_api_key_from_credentials_file() -> Result<String, Box<dyn std::error::Error>> {
+    let contents = fs::read_to_string("credentials.toml")?;
+    let cred: toml::Value = contents.parse()?;
     let openai_api_key = cred["openai_api_key"]
         .as_str()
-        .expect("Expected a openai_api_key in the credentials.toml file")
+        .ok_or("Expected a openai_api_key in the credentials.toml file")?
         .to_string();
-    OpenAiClient::new().with_api_key(openai_api_key)
+    Ok(openai_api_key)
 }
 
-/// Use gpt to query information
-pub async fn gpt_info_query(model: &str, max_tokens: u16, query: &str) -> Result<String, String> {
-    let openai = get_openai();
-
-    // Turn query into a array of ChatCompletionRequestMessageArgs, each line starts with S: A: or U: for system assistant or user
+fn build_messages_from_query(
+    query: &str,
+) -> std::vec::Vec<async_openai::types::ChatCompletionRequestMessage> {
     let mut messages: Vec<ChatCompletionRequestMessage> = Vec::new();
     for line in query.split("###").filter(|s| !s.trim().is_empty()) {
         let (role, content) = match line.chars().next().unwrap() {
@@ -50,38 +47,30 @@ pub async fn gpt_info_query(model: &str, max_tokens: u16, query: &str) -> Result
             .unwrap();
         messages.push(message);
     }
+    messages
+}
 
-    // Search with gpt through the memories to answer the query
+async fn query_gpt_with_retries(
+    openai: &OpenAiClient,
+    model: &str,
+    messages: &[ChatCompletionRequestMessage],
+    max_tokens: u16,
+    retries: usize,
+) -> Result<CreateChatCompletionResponse, Box<dyn std::error::Error>> {
     let request = CreateChatCompletionRequestArgs::default()
         .model(model)
-        .messages(messages)
+        .messages(messages.to_vec())
         .max_tokens(max_tokens)
         .build()
         .unwrap();
 
-    // Retry the request if it fails
     let mut tries = 0;
-    let response = loop {
-        let response = openai.chat().create(request.clone()).await;
-        if let Ok(response) = response {
-            break Ok(response);
+    while tries < retries {
+        let result = openai.chat().create(request.clone()).await;
+        if result.is_ok() {
+            return Ok(result.unwrap());
         }
         tries += 1;
-        if tries >= 3 {
-            break response;
-        }
-    };
-    // Return from errors
-    if response.is_err() {
-        return Err("Failed to get response from openai".to_string());
     }
-    let result = response
-        .unwrap()
-        .choices
-        .first()
-        .unwrap()
-        .message
-        .content
-        .clone();
-    Ok(result)
+    Err("Failed to get response from openai")?
 }
