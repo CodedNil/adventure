@@ -15,17 +15,20 @@ name = "Player1"
 description = "A brave warrior who seeks to atone for their past mistakes."
 status = "Healthy, uninjured"
 [[player_characters.items]]
-name = "Soulbound Armour"
+name = "Soulbound Chestplate"
+slot = "Chest"
 description = "Armour made from the essence of the Labyrinth"
 photo_description = "Sleek black armour with glowing blue runes"
 pointer_to_image = "soulbound_armour.png"
 [[player_characters.items]]
 name = "Soulbound Shield"
+slot = "Shield,One-Handed"
 description = "A shield made from the essence of the Labyrinth"
 photo_description = "A sturdy shield with glowing blue runes"
 pointer_to_image = "soulbound_shield.png"
 [[player_characters.items]]
 name = "Sword of Redemption"
+slot = "Sword,One-Handed"
 description = "A magical sword that grows stronger with each enemy defeated"
 photo_description = "A gleaming silver sword with intricate engravings"
 pointer_to_image = "sword_of_redemption.png"
@@ -36,11 +39,13 @@ description = "A wise mage seeking to uncover the secrets of the Labyrinth."
 status = "Healthy, uninjured"
 [[player_characters.items]]
 name = "Soulbound Robes"
+slot = "Chest,Legs,Arms"
 description = "Robes made from the essence of the Labyrinth"
 photo_description = "Flowing black robes with glowing blue runes"
 pointer_to_image = "soulbound_robes.png"
 [[player_characters.items]]
 name = "Staff of Knowledge"
+slot = "Staff,Two-Handed"
 description = "A magical staff that grows stronger with each secret uncovered"
 photo_description = "A gleaming silver staff with intricate engravings"
 pointer_to_image = "staff_of_knowledge.png"
@@ -59,29 +64,38 @@ name = "Magma Beasts"
 description = "Fiery creatures born from the lava pools of the Labyrinth"
 photo_description = "A hulking, molten figure with flames flickering from its body."
 image = "magma_beasts.png"
-status_towards_players = "Hostile"
+status_towards_players = "Hostile and angry, no encounters with players"
 [[species.subspecies]]
 name = "Magma Golem"
 description = "A large, humanoid creature composed of molten rock."
 photo_description = "A towering figure made of lava, with molten arms and legs."
 image = "magma_golem.png"
-[[species.members]]
-name = "Flare"
-subspecies = "Magma Golem"
-status = "Hostile"
 
 [[species]]
 name = "Sentient Spirits"
 description = "Intelligent beings that have formed their own communities within the Labyrinth."
 photo_description = "A ghostly figure with a benevolent expression."
 image = "sentient_spirits.png"
-status = "Friendly"
+status_towards_players = "Friendly, no encounters with players"
 [[species.subspecies]]
 name = "Wisp"
 description = "Small, floating spirits that emit a calming light."
 photo_description = "A tiny, glowing orb with a gentle, ethereal presence."
 image = "wisp.png"
-[[species.members]]
+
+
+[[npcs]]
+name = "Flare"
+species = "Magma Beasts"
+subspecies = "Magma Golem"
+status = "Healthy"
+history = "Flare is a magma golem who was created by the Labyrinth to guard the entrance to the forest. He is a fierce warrior who will attack anyone who tries to enter the forest without permission."
+items = []
+
+[[npcs]]
 name = "Lumina"
+species = "Sentient Spirits"
 subspecies = "Wisp"
-status = "Friendly"
+status = "Happy and healthy"
+history = "Lumina was once a human who died in the Labyrinth. She has since become a wisp, a small spirit that emits a calming light. She is friendly towards the players and is willing to help them on their journey."
+items = []

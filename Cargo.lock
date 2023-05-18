@@ -9,7 +9,6 @@ dependencies = [
  "async-openai",
  "reqwest",
  "serde",
- "serde_json",
  "thiserror",
  "tiktoken-rs",
  "tokio",
