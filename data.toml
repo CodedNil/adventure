@@ -1,0 +1,87 @@
+[setting]
+name = "Endless Labyrinth"
+background = "A mystical realm that serves as the afterlife for countless souls."
+description_brief = "Welcome to the Endless Labyrinth, a magical realm that serves as the afterlife for countless souls who have left their mortal lives behind. This realm is filled with endless tunnels and chambers, each one more unique and unpredictable than the last. The vast expanse overhead opens into an eternal, bright void that seems to stretch on forever."
+description_detailed = """
+Story Premise:
+The players begin the game as newly arrived souls in the Endless Labyrinth, each having left their mortal life behind due to some unfinished business, great regret, or a desire to seek redemption. A mysterious entity known as The Keeper of the Labyrinth informs them that the only way to achieve their goals and find peace is to journey through the Labyrinth, delving deeper and deeper into its mysteries.
+
+Gameplay:
+The players are Soulbound, spirits tethered to the Labyrinth who possess incredible magical abilities but are not truly physical beings. This allows them to adapt and evolve as they journey deeper into the Labyrinth, enhancing their abilities, gear, and even their spiritual forms. The players will need to explore, interact with various inhabitants of the Labyrinth, and overcome challenges and enemies in order to progress."""
+
+
+[[player_characters]]
+name = "Player1"
+description = "A brave warrior who seeks to atone for their past mistakes."
+status = "Healthy, uninjured"
+[[player_characters.items]]
+name = "Soulbound Armour"
+description = "Armour made from the essence of the Labyrinth"
+photo_description = "Sleek black armour with glowing blue runes"
+pointer_to_image = "soulbound_armour.png"
+[[player_characters.items]]
+name = "Soulbound Shield"
+description = "A shield made from the essence of the Labyrinth"
+photo_description = "A sturdy shield with glowing blue runes"
+pointer_to_image = "soulbound_shield.png"
+[[player_characters.items]]
+name = "Sword of Redemption"
+description = "A magical sword that grows stronger with each enemy defeated"
+photo_description = "A gleaming silver sword with intricate engravings"
+pointer_to_image = "sword_of_redemption.png"
+
+[[player_characters]]
+name = "Player2"
+description = "A wise mage seeking to uncover the secrets of the Labyrinth."
+status = "Healthy, uninjured"
+[[player_characters.items]]
+name = "Soulbound Robes"
+description = "Robes made from the essence of the Labyrinth"
+photo_description = "Flowing black robes with glowing blue runes"
+pointer_to_image = "soulbound_robes.png"
+[[player_characters.items]]
+name = "Staff of Knowledge"
+description = "A magical staff that grows stronger with each secret uncovered"
+photo_description = "A gleaming silver staff with intricate engravings"
+pointer_to_image = "staff_of_knowledge.png"
+
+
+[[rooms]]
+id = 1
+linked_rooms = [2, 3]
+description = "A room filled with lush greenery and a peaceful stream"
+photo_description = "A serene forest clearing with a small stream running through it"
+image = "forest_clearing.png"
+
+
+[[species]]
+name = "Magma Beasts"
+description = "Fiery creatures born from the lava pools of the Labyrinth"
+photo_description = "A hulking, molten figure with flames flickering from its body."
+image = "magma_beasts.png"
+status_towards_players = "Hostile"
+[[species.subspecies]]
+name = "Magma Golem"
+description = "A large, humanoid creature composed of molten rock."
+photo_description = "A towering figure made of lava, with molten arms and legs."
+image = "magma_golem.png"
+[[species.members]]
+name = "Flare"
+subspecies = "Magma Golem"
+status = "Hostile"
+
+[[species]]
+name = "Sentient Spirits"
+description = "Intelligent beings that have formed their own communities within the Labyrinth."
+photo_description = "A ghostly figure with a benevolent expression."
+image = "sentient_spirits.png"
+status = "Friendly"
+[[species.subspecies]]
+name = "Wisp"
+description = "Small, floating spirits that emit a calming light."
+photo_description = "A tiny, glowing orb with a gentle, ethereal presence."
+image = "wisp.png"
+[[species.members]]
+name = "Lumina"
+subspecies = "Wisp"
+status = "Friendly"
