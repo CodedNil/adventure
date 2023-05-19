@@ -42,7 +42,7 @@ struct GameData {
     setting: Setting,
     player_characters: Vec<PlayerCharacter>,
     rooms: Vec<Room>,
-    species: Vec<Species>,
+    factions: Vec<Faction>,
     npcs: Vec<NPC>,
 }
 
@@ -64,8 +64,8 @@ struct PlayerCharacter {
 #[derive(Debug, Deserialize)]
 struct NPC {
     name: String,
-    species: String,
-    subspecies: String,
+    faction: String,
+    variant: String,
     status: String,
     history: String,
     items: Vec<Item>,
@@ -89,16 +89,16 @@ struct Room {
 }
 
 #[derive(Debug, Deserialize)]
-struct Species {
+struct Faction {
     name: String,
     description: String,
     photo_description: String,
     image: String,
     status_towards_players: String,
-    subspecies: Vec<Subspecies>,
+    variants: Vec<Variant>,
 }
 #[derive(Debug, Deserialize)]
-struct Subspecies {
+struct Variant {
     name: String,
     description: String,
     photo_description: String,
@@ -125,7 +125,6 @@ fn main() {
     // Add player character (Users customisation UI with buttons to generate things) (generates items)
 
     // Add item (generates description, photo_description, image)
-
 
     // Create game ui with journal to view all the data, and buttons to add new data
 }

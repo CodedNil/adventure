@@ -59,25 +59,25 @@ photo_description = "A serene forest clearing with a small stream running throug
 image = "forest_clearing.png"
 
 
-[[species]]
+[[factions]]
 name = "Magma Beasts"
 description = "Fiery creatures born from the lava pools of the Labyrinth"
 photo_description = "A hulking, molten figure with flames flickering from its body."
 image = "magma_beasts.png"
 status_towards_players = "Hostile and angry, no encounters with players"
-[[species.subspecies]]
+[[factions.variants]]
 name = "Magma Golem"
 description = "A large, humanoid creature composed of molten rock."
 photo_description = "A towering figure made of lava, with molten arms and legs."
 image = "magma_golem.png"
 
-[[species]]
+[[factions]]
 name = "Sentient Spirits"
 description = "Intelligent beings that have formed their own communities within the Labyrinth."
 photo_description = "A ghostly figure with a benevolent expression."
 image = "sentient_spirits.png"
 status_towards_players = "Friendly, no encounters with players"
-[[species.subspecies]]
+[[factions.variants]]
 name = "Wisp"
 description = "Small, floating spirits that emit a calming light."
 photo_description = "A tiny, glowing orb with a gentle, ethereal presence."
@@ -86,16 +86,37 @@ image = "wisp.png"
 
 [[npcs]]
 name = "Flare"
-species = "Magma Beasts"
-subspecies = "Magma Golem"
+faction = "Magma Beasts"
+variant = "Magma Golem"
 status = "Healthy"
 history = "Flare is a magma golem who was created by the Labyrinth to guard the entrance to the forest. He is a fierce warrior who will attack anyone who tries to enter the forest without permission."
 items = []
 
 [[npcs]]
 name = "Lumina"
-species = "Sentient Spirits"
-subspecies = "Wisp"
+faction = "Sentient Spirits"
+variant = "Wisp"
 status = "Happy and healthy"
 history = "Lumina was once a human who died in the Labyrinth. She has since become a wisp, a small spirit that emits a calming light. She is friendly towards the players and is willing to help them on their journey."
 items = []
+
+
+[[animals]]
+name = "Forest Wolf"
+description = "A large, grey wolf with a thick coat of fur."
+photo_description = "A large, grey wolf with a thick coat of fur."
+image = "forest_wolf.png"
+status_towards_players = "Generally passive but defensive and territorial"
+[[animals.variants]]
+name = "Alpha Wolf"
+description = "A large, grey wolf with a thick coat of fur."
+photo_description = "A large, grey wolf with a thick coat of fur."
+image = "alpha_wolf.png"
+
+[[animals]]
+name = "Forest Bear"
+description = "A large, brown bear with a thick coat of fur."
+photo_description = "A large, brown bear with a thick coat of fur."
+image = "forest_bear.png"
+status_towards_players = "Generally passive but defensive and territorial"
+[[animals.variants]]
