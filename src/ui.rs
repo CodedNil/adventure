@@ -6,13 +6,11 @@ use iced_aw::{split, Split};
 use iced_aw::{TabLabel, Tabs};
 use std::cmp;
 
-use crate::{Item, PlayerCharacter};
+use crate::data;
+mod player_list;
 
-pub fn create(players: Vec<PlayerCharacter>) -> iced::Result {
-    UIApp::run(Settings {
-        flags: players,
-        ..Settings::default()
-    })
+pub fn create() -> iced::Result {
+    UIApp::run(Settings::default())
 }
 
 #[derive(Debug, Clone)]
@@ -27,23 +25,21 @@ struct UIApp {
     main_width: u16,
     journal_width: u16,
     journal_tab: usize,
-    players: Vec<PlayerCharacter>,
 }
 
 impl Application for UIApp {
     type Message = Message;
-    type Flags = Vec<PlayerCharacter>;
+    type Flags = ();
     type Theme = Theme;
     type Executor = iced::executor::Default;
 
-    fn new(players: Self::Flags) -> (UIApp, Command<Message>) {
+    fn new(_flags: Self::Flags) -> (UIApp, Command<Message>) {
         (
             UIApp {
                 window_width: 800,
                 main_width: 600,
                 journal_width: 200,
                 journal_tab: 0,
-                players: players,
             },
             Command::none(),
         )
@@ -97,9 +93,11 @@ impl Application for UIApp {
             match label {
                 "Players" => {
                     let tab_label = TabLabel::Text(label.to_string());
-                    let mut column = Column::new();
+                    let mut column = Column::new().spacing(20);
 
-                    for player in &self.players {
+                    let data = data::load();
+
+                    for player in &data.player_characters {
                         let player_text = format!(
                             "Name: {}\nDescription: {}\nStatus: {}\nItems: {:?}\n",
                             player.name, player.description, player.status, player.items
