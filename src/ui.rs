@@ -7,7 +7,6 @@ use iced_aw::{TabLabel, Tabs};
 use std::cmp;
 
 use crate::data;
-mod player_list;
 
 pub fn create() -> iced::Result {
     UIApp::run(Settings::default())
@@ -121,6 +120,7 @@ impl Application for UIApp {
             split::Axis::Vertical,
             Message::OnJournalResize,
         )
+        .spacing(20.0)
         .into()
     }
 }
