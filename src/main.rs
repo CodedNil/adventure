@@ -42,17 +42,12 @@ mod ui;
 struct GameData {
     setting: Setting,
     player_characters: Vec<PlayerCharacter>,
-    rooms: Vec<Room>,
-    factions: Vec<Faction>,
-    npcs: Vec<Npc>,
 }
 
 #[derive(Debug, Deserialize, Clone)]
 struct Setting {
     name: String,
     background: String,
-    description_brief: String,
-    description_detailed: String,
 }
 
 #[derive(Debug, Deserialize, Clone)]
@@ -63,47 +58,12 @@ pub struct PlayerCharacter {
     items: Vec<Item>,
 }
 #[derive(Debug, Deserialize, Clone)]
-struct Npc {
-    name: String,
-    faction: String,
-    variant: String,
-    status: String,
-    history: String,
-    items: Vec<Item>,
-}
-#[derive(Debug, Deserialize, Clone)]
 struct Item {
     name: String,
     slot: String,
     description: String,
     photo_description: String,
     pointer_to_image: String,
-}
-
-#[derive(Debug, Deserialize, Clone)]
-struct Room {
-    id: usize,
-    linked_rooms: Vec<usize>,
-    description: String,
-    photo_description: String,
-    image: String,
-}
-
-#[derive(Debug, Deserialize, Clone)]
-struct Faction {
-    name: String,
-    description: String,
-    photo_description: String,
-    image: String,
-    status_towards_players: String,
-    variants: Vec<Variant>,
-}
-#[derive(Debug, Deserialize, Clone)]
-struct Variant {
-    name: String,
-    description: String,
-    photo_description: String,
-    image: String,
 }
 
 fn main() {

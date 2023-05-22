@@ -1,13 +1,6 @@
 [setting]
 name = "Endless Labyrinth"
-background = "A mystical realm that serves as the afterlife for countless souls."
-description_brief = "Welcome to the Endless Labyrinth, a magical realm that serves as the afterlife for countless souls who have left their mortal lives behind. This realm is filled with endless tunnels and chambers, each one more unique and unpredictable than the last. The vast expanse overhead opens into an eternal, bright void that seems to stretch on forever."
-description_detailed = """
-Story Premise:
-The players begin the game as newly arrived souls in the Endless Labyrinth, each having left their mortal life behind due to some unfinished business, great regret, or a desire to seek redemption. A mysterious entity known as The Keeper of the Labyrinth informs them that the only way to achieve their goals and find peace is to journey through the Labyrinth, delving deeper and deeper into its mysteries.
-
-Gameplay:
-The players are Soulbound, spirits tethered to the Labyrinth who possess incredible magical abilities but are not truly physical beings. This allows them to adapt and evolve as they journey deeper into the Labyrinth, enhancing their abilities, gear, and even their spiritual forms. The players will need to explore, interact with various inhabitants of the Labyrinth, and overcome challenges and enemies in order to progress."""
+background = "A magical realm that serves as the afterlife for countless souls who have left their mortal lives behind. This realm is filled with endless tunnels and chambers, each one more unique and unpredictable than the last. The vast expanse overhead opens into an eternal, bright void that seems to stretch on forever."
 
 
 [[player_characters]]
@@ -18,20 +11,17 @@ status = "Healthy, uninjured"
 name = "Soulbound Chestplate"
 slot = "Chest"
 description = "Armour made from the essence of the Labyrinth"
-photo_description = "Sleek black armour with glowing blue runes"
-pointer_to_image = "soulbound_armour.png"
+image = "Sleek black armour with glowing blue runes"
 [[player_characters.items]]
 name = "Soulbound Shield"
 slot = "Shield,One-Handed"
 description = "A shield made from the essence of the Labyrinth"
-photo_description = "A sturdy shield with glowing blue runes"
-pointer_to_image = "soulbound_shield.png"
+image = "A sturdy shield with glowing blue runes"
 [[player_characters.items]]
 name = "Sword of Redemption"
 slot = "Sword,One-Handed"
 description = "A magical sword that grows stronger with each enemy defeated"
-photo_description = "A gleaming silver sword with intricate engravings"
-pointer_to_image = "sword_of_redemption.png"
+image = "A gleaming silver sword with intricate engravings"
 
 [[player_characters]]
 name = "Player2"
@@ -41,61 +31,127 @@ status = "Healthy, uninjured"
 name = "Soulbound Robes"
 slot = "Chest,Legs,Arms"
 description = "Robes made from the essence of the Labyrinth"
-photo_description = "Flowing black robes with glowing blue runes"
-pointer_to_image = "soulbound_robes.png"
+image = "Flowing black robes with glowing blue runes"
 [[player_characters.items]]
 name = "Staff of Knowledge"
 slot = "Staff,Two-Handed"
 description = "A magical staff that grows stronger with each secret uncovered"
-photo_description = "A gleaming silver staff with intricate engravings"
-pointer_to_image = "staff_of_knowledge.png"
+image = "A gleaming silver staff with intricate engravings"
 
 
-[[rooms]]
-id = 1
-linked_rooms = [2, 3]
-description = "A room filled with lush greenery and a peaceful stream"
-photo_description = "A serene forest clearing with a small stream running through it"
-image = "forest_clearing.png"
+[[zone]]
+name = "magma_fortress"
+description = "A fortress built by Magma Beasts in the heart of a volcano."
+factions = ["Magma Beasts"]
+fauna = [
+    "fire salamanders",
+    "lava snakes",
+    "magma bats",
+    "blazing lizards",
+    "ember wolves",
+    "char hawks",
+]
+flora = [
+    "fire fungi",
+    "lava moss",
+    "blazing bushes",
+    "scorching cacti",
+    "smoldering orchids",
+    "burning vines",
+]
+start_room = "volcano_entrance"
+end_room = "volcano_throne_room"
+
+[[zone.rooms]]
+name = "volcano_entrance"
+description = "The entrance to the volcanic fortress."
+contents = ["ash-covered ground", "smoking lava pits"]
+size = "large"
+connections = ["main_hall", "lava_tail"]
+
+[[zone.rooms]]
+name = "main_hall"
+description = "A large hall with pillars of molten rock supporting the ceiling."
+contents = ["lava flowing through channels in the floor", "Magma Beast guards"]
+size = "huge"
+connections = ["volcano_entrance", "armory", "throne_room", "dining_hall"]
+
+[[zone.rooms]]
+name = "armory"
+description = "A room filled with weapons made of hardened lava."
+contents = ["weapon racks", "lava forges"]
+size = "medium"
+connections = ["main_hall"]
+
+[[zone.rooms]]
+name = "throne_room"
+description = "The throne room of the Magma Beast king."
+contents = ["molten throne", "Magma Beast king"]
+size = "large"
+connections = ["main_hall", "treasury"]
+
+[[zone.rooms]]
+name = "dining_hall"
+description = "A large hall where Magma Beasts feast."
+contents = ["long table", "Magma Beast feasters"]
+size = "huge"
+connections = ["main_hall", "kitchen"]
+
+[[zone.rooms]]
+name = "kitchen"
+description = "A room with ovens fueled by molten lava."
+contents = ["cooking utensils", "lava ovens"]
+size = "medium"
+connections = ["dining_hall", "pantry"]
+
+[[zone.rooms]]
+name = "pantry"
+description = "A room filled with fiery food."
+contents = ["food stores"]
+size = "small"
+connections = ["kitchen"]
+
+[[zone.rooms]]
+name = "treasury"
+description = "A room filled with treasure hoarded by the Magma Beasts."
+contents = ["treasure chests"]
+size = "medium"
+connections = ["throne_room"]
+
+[[zone.rooms]]
+name = "lava_tail"
+description = "A long, winding tunnel filled with boiling lava."
+contents = ["dangerous terrain"]
+size = "huge"
+connections = ["volcano_entrance"]
 
 
 [[factions]]
 name = "Magma Beasts"
 description = "Fiery creatures born from the lava pools of the Labyrinth"
-photo_description = "A hulking, molten figure with flames flickering from its body."
-image = "magma_beasts.png"
+image = "A hulking, molten figure with flames flickering from its body."
 status_towards_players = "Hostile and angry, no encounters with players"
 [[factions.variants]]
 name = "Magma Golem"
 description = "A large, humanoid creature composed of molten rock."
-photo_description = "A towering figure made of lava, with molten arms and legs."
-image = "magma_golem.png"
+image = "A towering figure made of lava, with molten arms and legs."
+[[factions.variants.members]]
+name = "Flare"
+status = "Healthy"
+history = "Flare was a human who grew too connected to the magma pools of the Labyrinth. He has since become a magma golem, a large, humanoid creature composed of molten rock. He is hostile towards the players and will attack them on sight."
+items = []
 
 [[factions]]
 name = "Sentient Spirits"
 description = "Intelligent beings that have formed their own communities within the Labyrinth."
-photo_description = "A ghostly figure with a benevolent expression."
-image = "sentient_spirits.png"
+image = "A ghostly figure with a benevolent expression."
 status_towards_players = "Friendly, no encounters with players"
 [[factions.variants]]
 name = "Wisp"
 description = "Small, floating spirits that emit a calming light."
-photo_description = "A tiny, glowing orb with a gentle, ethereal presence."
-image = "wisp.png"
-
-
-[[npcs]]
-name = "Flare"
-faction = "Magma Beasts"
-variant = "Magma Golem"
-status = "Healthy"
-history = "Flare is a magma golem who was created by the Labyrinth to guard the entrance to the forest. He is a fierce warrior who will attack anyone who tries to enter the forest without permission."
-items = []
-
-[[npcs]]
+image = "A tiny, glowing orb with a gentle, ethereal presence."
+[[factions.variants.members]]
 name = "Lumina"
-faction = "Sentient Spirits"
-variant = "Wisp"
 status = "Happy and healthy"
 history = "Lumina was once a human who died in the Labyrinth. She has since become a wisp, a small spirit that emits a calming light. She is friendly towards the players and is willing to help them on their journey."
 items = []
@@ -104,19 +160,21 @@ items = []
 [[animals]]
 name = "Forest Wolf"
 description = "A large, grey wolf with a thick coat of fur."
-photo_description = "A large, grey wolf with a thick coat of fur."
-image = "forest_wolf.png"
+image = "A large, grey wolf with a thick coat of fur."
 status_towards_players = "Generally passive but defensive and territorial"
 [[animals.variants]]
 name = "Alpha Wolf"
 description = "A large, grey wolf with a thick coat of fur."
-photo_description = "A large, grey wolf with a thick coat of fur."
-image = "alpha_wolf.png"
+image = "A large, grey wolf with a thick coat of fur."
+[[animals.variants.members]]
+name = "Alpha"
+status = ""
+history = ""
 
 [[animals]]
 name = "Forest Bear"
 description = "A large, brown bear with a thick coat of fur."
-photo_description = "A large, brown bear with a thick coat of fur."
-image = "forest_bear.png"
+image = "A large, brown bear with a thick coat of fur."
 status_towards_players = "Generally passive but defensive and territorial"
 [[animals.variants]]
+[[animals.variants.members]]
