@@ -1,13 +1,18 @@
 use iced::{
-    widget::{Container, Text},
+    widget::{Column, Container, Text},
     window, Application, Command, Element, Length, Settings, Subscription, Theme,
 };
 use iced_aw::{split, Split};
 use iced_aw::{TabLabel, Tabs};
 use std::cmp;
 
-pub fn create() -> iced::Result {
-    UIApp::run(Settings::default())
+use crate::{Item, PlayerCharacter};
+
+pub fn create(players: Vec<PlayerCharacter>) -> iced::Result {
+    UIApp::run(Settings {
+        flags: players,
+        ..Settings::default()
+    })
 }
 
 #[derive(Debug, Clone)]
@@ -22,21 +27,23 @@ struct UIApp {
     main_width: u16,
     journal_width: u16,
     journal_tab: usize,
+    players: Vec<PlayerCharacter>,
 }
 
 impl Application for UIApp {
     type Message = Message;
-    type Flags = ();
+    type Flags = Vec<PlayerCharacter>;
     type Theme = Theme;
     type Executor = iced::executor::Default;
 
-    fn new(_flags: Self::Flags) -> (UIApp, Command<Message>) {
+    fn new(players: Self::Flags) -> (UIApp, Command<Message>) {
         (
             UIApp {
                 window_width: 800,
                 main_width: 600,
                 journal_width: 200,
                 journal_tab: 0,
+                players: players,
             },
             Command::none(),
         )
@@ -49,13 +56,13 @@ impl Application for UIApp {
     fn update(&mut self, message: Message) -> Command<Message> {
         match message {
             Message::OnJournalResize(position) => {
-                let max_position = self.window_width - 50;
+                let max_position = self.window_width - 200;
                 let valid_position = cmp::min(position, max_position);
                 self.journal_width = self.window_width - valid_position;
                 self.main_width = cmp::max(self.window_width - self.journal_width, 200);
             }
             Message::WindowResized(width, _height) => {
-                self.window_width = cmp::max(width as u16, 100);
+                self.window_width = cmp::max(width as u16, 200);
                 self.main_width =
                     cmp::max(self.window_width.saturating_sub(self.journal_width), 200);
             }
@@ -81,21 +88,32 @@ impl Application for UIApp {
             .center_x()
             .center_y();
 
-        let tab_labels = vec![
-            "Players".to_string(),
-            "Zones".to_string(),
-            "Factions".to_string(),
-            "Animals".to_string(),
-        ];
+        let tab_labels = vec!["Players", "Zones", "Factions", "Animals"];
 
         let mut journal = Tabs::new(self.journal_tab, Message::JournalTabSelected)
             .tab_bar_position(iced_aw::TabBarPosition::Top);
 
-        for label in &tab_labels {
-            journal = journal.push(
-                TabLabel::Text(label.clone()),
-                Container::new(Text::new(format!("{} Content", label))),
-            );
+        for label in tab_labels {
+            match label {
+                "Players" => {
+                    let tab_label = TabLabel::Text(label.to_string());
+                    let mut column = Column::new();
+
+                    for player in &self.players {
+                        let player_text = format!(
+                            "Name: {}\nDescription: {}\nStatus: {}\nItems: {:?}\n",
+                            player.name, player.description, player.status, player.items
+                        );
+                        column = column.push(Text::new(player_text));
+                    }
+                    journal = journal.push(tab_label, column);
+                }
+                _ => {
+                    let tab_label = TabLabel::Text(label.to_string());
+                    let content = Container::new(Text::new(format!("{label} Content")));
+                    journal = journal.push(tab_label, content);
+                }
+            }
         }
 
         Split::new(

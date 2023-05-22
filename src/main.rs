@@ -38,7 +38,7 @@ mod ui;
 //     println!("{output:?}");
 // }
 
-#[derive(Debug, Deserialize)]
+#[derive(Debug, Deserialize, Clone)]
 struct GameData {
     setting: Setting,
     player_characters: Vec<PlayerCharacter>,
@@ -47,7 +47,7 @@ struct GameData {
     npcs: Vec<Npc>,
 }
 
-#[derive(Debug, Deserialize)]
+#[derive(Debug, Deserialize, Clone)]
 struct Setting {
     name: String,
     background: String,
@@ -55,14 +55,14 @@ struct Setting {
     description_detailed: String,
 }
 
-#[derive(Debug, Deserialize)]
-struct PlayerCharacter {
+#[derive(Debug, Deserialize, Clone)]
+pub struct PlayerCharacter {
     name: String,
     description: String,
     status: String,
     items: Vec<Item>,
 }
-#[derive(Debug, Deserialize)]
+#[derive(Debug, Deserialize, Clone)]
 struct Npc {
     name: String,
     faction: String,
@@ -71,7 +71,7 @@ struct Npc {
     history: String,
     items: Vec<Item>,
 }
-#[derive(Debug, Deserialize)]
+#[derive(Debug, Deserialize, Clone)]
 struct Item {
     name: String,
     slot: String,
@@ -80,7 +80,7 @@ struct Item {
     pointer_to_image: String,
 }
 
-#[derive(Debug, Deserialize)]
+#[derive(Debug, Deserialize, Clone)]
 struct Room {
     id: usize,
     linked_rooms: Vec<usize>,
@@ -89,7 +89,7 @@ struct Room {
     image: String,
 }
 
-#[derive(Debug, Deserialize)]
+#[derive(Debug, Deserialize, Clone)]
 struct Faction {
     name: String,
     description: String,
@@ -98,7 +98,7 @@ struct Faction {
     status_towards_players: String,
     variants: Vec<Variant>,
 }
-#[derive(Debug, Deserialize)]
+#[derive(Debug, Deserialize, Clone)]
 struct Variant {
     name: String,
     description: String,
@@ -127,13 +127,11 @@ fn main() {
 
     // Add item (generates description, photo_description, image)
 
-
-
     // Flow of the gameplay loop from DM perspective
     // DM at any point has buttons to create factions, variants, animals, etc etc, to be used in future
     // Create a zone, either brief description provided or let the AI generate it
     // AI then generates all the rooms of the zone and joins them up, placing animals and npcs etc where needed, and placing loot and puzzles etc
 
     // Create game ui with journal to view all the data, and buttons to add new data
-    ui::create();
+    ui::create(data.player_characters);
 }
