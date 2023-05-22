@@ -3,6 +3,7 @@ use std::fs::File;
 use std::io::Read;
 
 mod apis;
+mod ui;
 
 // #[tokio::main]
 // async fn main() {
@@ -43,7 +44,7 @@ struct GameData {
     player_characters: Vec<PlayerCharacter>,
     rooms: Vec<Room>,
     factions: Vec<Faction>,
-    npcs: Vec<NPC>,
+    npcs: Vec<Npc>,
 }
 
 #[derive(Debug, Deserialize)]
@@ -62,7 +63,7 @@ struct PlayerCharacter {
     items: Vec<Item>,
 }
 #[derive(Debug, Deserialize)]
-struct NPC {
+struct Npc {
     name: String,
     faction: String,
     variant: String,
@@ -134,4 +135,5 @@ fn main() {
     // AI then generates all the rooms of the zone and joins them up, placing animals and npcs etc where needed, and placing loot and puzzles etc
 
     // Create game ui with journal to view all the data, and buttons to add new data
+    ui::create();
 }
