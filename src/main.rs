@@ -114,7 +114,7 @@ fn main() {
 
     let data: GameData = toml::from_str(&toml_str).unwrap();
 
-    println!("Data: {data:#?}");
+    // println!("Data: {data:#?}");
 
     // Apis to access and change the data
     // Add NPC, species & subspecies (generates name, status, history, items)

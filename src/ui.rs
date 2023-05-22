@@ -3,6 +3,7 @@ use iced::{
     window, Application, Command, Element, Length, Settings, Subscription, Theme,
 };
 use iced_aw::{split, Split};
+use iced_aw::{TabLabel, Tabs};
 use std::cmp;
 
 pub fn create() -> iced::Result {
@@ -13,12 +14,14 @@ pub fn create() -> iced::Result {
 enum Message {
     OnJournalResize(u16),
     WindowResized(u32, u32),
+    JournalTabSelected(usize),
 }
 
 struct UIApp {
+    window_width: u16,
     main_width: u16,
     journal_width: u16,
-    window_width: u16,
+    journal_tab: usize,
 }
 
 impl Application for UIApp {
@@ -30,9 +33,10 @@ impl Application for UIApp {
     fn new(_flags: Self::Flags) -> (UIApp, Command<Message>) {
         (
             UIApp {
+                window_width: 800,
                 main_width: 600,
                 journal_width: 200,
-                window_width: 800,
+                journal_tab: 0,
             },
             Command::none(),
         )
@@ -55,6 +59,7 @@ impl Application for UIApp {
                 self.main_width =
                     cmp::max(self.window_width.saturating_sub(self.journal_width), 200);
             }
+            Message::JournalTabSelected(index) => self.journal_tab = index,
         }
 
         Command::none()
@@ -76,11 +81,22 @@ impl Application for UIApp {
             .center_x()
             .center_y();
 
-        let journal = Container::new(Text::new("Journal"))
-            .width(Length::Fill)
-            .height(Length::Fill)
-            .center_x()
-            .center_y();
+        let tab_labels = vec![
+            "Players".to_string(),
+            "Zones".to_string(),
+            "Factions".to_string(),
+            "Animals".to_string(),
+        ];
+
+        let mut journal = Tabs::new(self.journal_tab, Message::JournalTabSelected)
+            .tab_bar_position(iced_aw::TabBarPosition::Top);
+
+        for label in &tab_labels {
+            journal = journal.push(
+                TabLabel::Text(label.clone()),
+                Container::new(Text::new(format!("{} Content", label))),
+            );
+        }
 
         Split::new(
             main_content,
@@ -90,9 +106,5 @@ impl Application for UIApp {
             Message::OnJournalResize,
         )
         .into()
-    }
-
-    fn theme(&self) -> Self::Theme {
-        Theme::Dark
     }
 }
