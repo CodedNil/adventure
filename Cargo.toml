@@ -6,5 +6,10 @@ edition = "2021"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
+async-openai = "0.10.3"
 dioxus = "0.3.2"
 dioxus-web = "0.3.2"
+serde = "1.0.163"
+thiserror = "1.0.40"
+tokio = { version = "1.28", features = ["macros", "rt-multi-thread"] }
+toml = "0.7.4"
